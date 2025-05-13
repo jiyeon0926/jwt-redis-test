@@ -8,4 +8,5 @@ import lombok.RequiredArgsConstructor;
 public class SignupReqDto {
 
     private final String email;
+    private final String password;
 }

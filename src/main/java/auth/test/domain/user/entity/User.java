@@ -14,10 +14,14 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    public User(String email) {
+    @Column(nullable = false)
+    private String password;
+
+    public User(String email, String password) {
         this.email = email;
+        this.password = password;
     }
 }

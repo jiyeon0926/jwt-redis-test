@@ -19,7 +19,7 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody SignupReqDto signupReqDto) {
-        userService.signup(signupReqDto.getEmail());
+        userService.signup(signupReqDto.getEmail(), signupReqDto.getPassword());
 
         return new ResponseEntity<>("회원가입 완료", HttpStatus.CREATED);
     }
