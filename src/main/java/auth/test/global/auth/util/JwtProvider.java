@@ -7,12 +7,15 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.List;
 import java.util.function.Function;
 
 @Component
@@ -56,6 +59,9 @@ public class JwtProvider {
     }
 
     private String generateAccessTokenBy(String email) {
+       userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."));
+
         Date currentDate = new Date();
         Date expireDate = new Date(currentDate.getTime() + accessExpiryMillis);
 
@@ -63,6 +69,7 @@ public class JwtProvider {
                 .subject(email)
                 .issuedAt(currentDate)
                 .expiration(expireDate)
+                .claim("role", List.of())
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)), Jwts.SIG.HS256)
                 .compact();
     }
