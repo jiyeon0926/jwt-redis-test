@@ -30,12 +30,12 @@ public class TokenService {
     }
 
     public void removeRefreshToken(String refreshToken) {
-        tokenRepository.findById(refreshToken)
+        tokenRepository.findByRefreshToken(refreshToken)
                 .ifPresent(token -> tokenRepository.delete(token));
     }
 
     public void validRefreshToken(String refreshToken) {
-        tokenRepository.findById(refreshToken)
+        tokenRepository.findByRefreshToken(refreshToken)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "유효하지 않은 Refresh Token입니다."));
     }
 }
