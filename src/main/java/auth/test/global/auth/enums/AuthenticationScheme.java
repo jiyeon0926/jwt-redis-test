@@ -1,4 +1,4 @@
-package auth.test.global.auth.util;
+package auth.test.global.auth.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

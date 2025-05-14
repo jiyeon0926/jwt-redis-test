@@ -3,7 +3,7 @@ package auth.test.domain.user.service;
 import auth.test.domain.user.dto.AuthResDto;
 import auth.test.domain.user.entity.User;
 import auth.test.domain.user.repository.UserRepository;
-import auth.test.global.auth.util.AuthenticationScheme;
+import auth.test.global.auth.enums.AuthenticationScheme;
 import auth.test.global.auth.util.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
