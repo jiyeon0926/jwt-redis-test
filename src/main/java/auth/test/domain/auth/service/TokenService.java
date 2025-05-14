@@ -35,7 +35,7 @@ public class TokenService {
     }
 
     public void validRefreshToken(String refreshToken) {
-        RefreshToken redisToken = tokenRepository.findById(refreshToken)
+        tokenRepository.findById(refreshToken)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "유효하지 않은 Refresh Token입니다."));
     }
 }
