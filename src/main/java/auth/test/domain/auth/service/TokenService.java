@@ -5,7 +5,9 @@ import auth.test.domain.auth.repository.TokenRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -30,5 +32,10 @@ public class TokenService {
     public void removeRefreshToken(String refreshToken) {
         tokenRepository.findById(refreshToken)
                 .ifPresent(token -> tokenRepository.delete(token));
+    }
+
+    public void validRefreshToken(String refreshToken) {
+        RefreshToken redisToken = tokenRepository.findById(refreshToken)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "유효하지 않은 Refresh Token입니다."));
     }
 }

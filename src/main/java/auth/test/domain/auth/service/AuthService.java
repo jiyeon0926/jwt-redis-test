@@ -46,9 +46,7 @@ public class AuthService {
     }
 
     public TokenDto refresh(String refreshToken) {
-        if (jwtProvider.isAccessToken(refreshToken)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Refresh Token을 사용해 주세요.");
-        }
+        tokenService.validRefreshToken(refreshToken);
 
         String email = jwtProvider.getUsername(refreshToken);
 

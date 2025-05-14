@@ -7,6 +7,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 
+import java.util.concurrent.TimeUnit;
+
 @RedisHash("refreshToken")
 @Getter
 @NoArgsConstructor
@@ -17,7 +19,7 @@ public class RefreshToken {
 
     private String authKey;
 
-    @TimeToLive
+    @TimeToLive(unit = TimeUnit.MILLISECONDS)
     private Long ttl;
 
     @Builder
