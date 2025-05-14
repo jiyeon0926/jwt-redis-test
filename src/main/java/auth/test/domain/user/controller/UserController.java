@@ -1,7 +1,5 @@
 package auth.test.domain.user.controller;
 
-import auth.test.domain.user.dto.LoginReqDto;
-import auth.test.domain.user.dto.LoginResDto;
 import auth.test.domain.user.dto.SignupReqDto;
 import auth.test.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -24,12 +22,5 @@ public class UserController {
         userService.signup(signupReqDto.getEmail(), signupReqDto.getPassword());
 
         return new ResponseEntity<>("회원가입 완료", HttpStatus.CREATED);
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<LoginResDto> login(@RequestBody LoginReqDto loginReqDto) {
-        LoginResDto login = userService.login(loginReqDto.getEmail(), loginReqDto.getPassword());
-
-        return new ResponseEntity<>(login, HttpStatus.OK);
     }
 }

@@ -1,4 +1,4 @@
-package auth.test.domain.user.dto;
+package auth.test.domain.auth.dto;
 
 import lombok.Getter;
 
