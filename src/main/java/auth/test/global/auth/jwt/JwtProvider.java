@@ -28,7 +28,11 @@ public class JwtProvider {
 
     @Getter
     @Value("${jwt.expiry-millis}")
-    private long accessExpiryMillis;
+    private long expiryMillis;
+
+    @Getter
+    @Value("${jwt.refresh-expiry-millis}")
+    private long refreshExpiryMillis;
 
     private final UserRepository userRepository;
 
@@ -63,7 +67,7 @@ public class JwtProvider {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."));
 
         Date currentDate = new Date();
-        Date expireDate = new Date(currentDate.getTime() + accessExpiryMillis);
+        Date expireDate = new Date(currentDate.getTime() + expiryMillis);
 
         return Jwts.builder()
                 .subject(email)
