@@ -1,5 +1,6 @@
 package auth.test.global.auth.jwt;
 
+import auth.test.domain.auth.service.TokenService;
 import auth.test.domain.user.repository.UserRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -35,11 +36,15 @@ public class JwtProvider {
     private long refreshExpiryMillis;
 
     private final UserRepository userRepository;
+    private final TokenService tokenService;
 
     public String generateRefreshToken(Authentication authentication) {
         String username = authentication.getName();
+        String refreshToken = generateRefreshTokenBy(username);
 
-        return generateRefreshTokenBy(username);
+        tokenService.saveRefreshToken(refreshToken, username);
+
+        return refreshToken;
     }
 
     public String generateAccessToken(Authentication authentication) {
