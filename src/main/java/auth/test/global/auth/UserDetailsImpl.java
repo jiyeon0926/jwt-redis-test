@@ -1,4 +1,4 @@
-package auth.test.global.auth.security;
+package auth.test.global.auth;
 
 import auth.test.domain.user.entity.User;
 import lombok.Getter;

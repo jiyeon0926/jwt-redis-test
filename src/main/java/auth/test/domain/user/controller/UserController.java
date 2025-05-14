@@ -1,7 +1,7 @@
 package auth.test.domain.user.controller;
 
-import auth.test.domain.user.dto.AuthReqDto;
-import auth.test.domain.user.dto.AuthResDto;
+import auth.test.domain.user.dto.LoginReqDto;
+import auth.test.domain.user.dto.LoginResDto;
 import auth.test.domain.user.dto.SignupReqDto;
 import auth.test.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +27,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResDto> login(@RequestBody AuthReqDto authReqDto) {
-        AuthResDto login = userService.login(authReqDto.getEmail(), authReqDto.getPassword());
+    public ResponseEntity<LoginResDto> login(@RequestBody LoginReqDto loginReqDto) {
+        LoginResDto login = userService.login(loginReqDto.getEmail(), loginReqDto.getPassword());
 
         return new ResponseEntity<>(login, HttpStatus.OK);
     }

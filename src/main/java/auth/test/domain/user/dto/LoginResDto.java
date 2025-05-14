@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class AuthResDto {
+public class LoginResDto {
 
     private final String tokenAuthScheme;
     private final String accessToken;

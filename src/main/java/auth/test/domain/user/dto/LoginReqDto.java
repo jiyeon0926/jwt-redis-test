@@ -3,7 +3,7 @@ package auth.test.domain.user.dto;
 import lombok.Getter;
 
 @Getter
-public class AuthReqDto {
+public class LoginReqDto {
 
     private String email;
     private String password;

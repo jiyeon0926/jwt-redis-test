@@ -1,6 +1,6 @@
 package auth.test.global.config;
 
-import auth.test.global.auth.filter.JwtAuthFilter;
+import auth.test.global.auth.jwt.JwtAuthFilter;
 import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;

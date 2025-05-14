@@ -1,7 +1,6 @@
-package auth.test.global.auth.filter;
+package auth.test.global.auth.jwt;
 
 import auth.test.global.auth.enums.AuthenticationScheme;
-import auth.test.global.auth.util.JwtProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

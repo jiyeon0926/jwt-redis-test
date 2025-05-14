@@ -1,10 +1,10 @@
 package auth.test.domain.user.service;
 
-import auth.test.domain.user.dto.AuthResDto;
+import auth.test.domain.user.dto.LoginResDto;
 import auth.test.domain.user.entity.User;
 import auth.test.domain.user.repository.UserRepository;
 import auth.test.global.auth.enums.AuthenticationScheme;
-import auth.test.global.auth.util.JwtProvider;
+import auth.test.global.auth.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,7 +33,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public AuthResDto login(String email, String password) {
+    public LoginResDto login(String email, String password) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."));
 
@@ -46,7 +46,7 @@ public class UserService {
 
         String accessToken = jwtProvider.generateAccessToken(authentication);
 
-        return new AuthResDto(AuthenticationScheme.BEARER.getName(), accessToken);
+        return new LoginResDto(AuthenticationScheme.BEARER.getName(), accessToken);
     }
 
     private void validatePassword(String rawPassword, String encodedPassword) {

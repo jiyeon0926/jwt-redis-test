@@ -1,4 +1,4 @@
-package auth.test.global.auth.util;
+package auth.test.global.auth.jwt;
 
 import auth.test.domain.user.repository.UserRepository;
 import io.jsonwebtoken.*;
