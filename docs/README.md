@@ -7,13 +7,14 @@
 
 # 기능
 - 회원가입
-  - /users/signup
+  - /auth/signup
   - 이메일과 비밀번호만 입력
 - 로그인
-  - /users/login
+  - /auth/login
   - 이메일과 비밀번호를 통해 인증
 - Access Token 재발급
-  - /refresh
+  - /auth/refresh
+  - Refresh Token을 요청 값으로 보내고, Access Token을 재발급 받음
 
 # Test
 Redis를 사용해 Refresh Token 관리하기
