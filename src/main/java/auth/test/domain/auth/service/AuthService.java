@@ -1,6 +1,7 @@
 package auth.test.domain.auth.service;
 
 import auth.test.domain.auth.dto.LoginResDto;
+import auth.test.domain.auth.dto.TokenDto;
 import auth.test.domain.user.entity.User;
 import auth.test.domain.user.repository.UserRepository;
 import auth.test.global.auth.enums.AuthenticationScheme;
@@ -15,6 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -23,6 +26,7 @@ public class AuthService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
+    private final TokenService tokenService;
 
     public LoginResDto login(String email, String password) {
         User user = userRepository.findByEmail(email)
@@ -39,6 +43,17 @@ public class AuthService {
         String refreshToken = jwtProvider.generateRefreshToken(authentication);
 
         return new LoginResDto(AuthenticationScheme.BEARER.getName(), accessToken, refreshToken);
+    }
+
+    public TokenDto refresh(String refreshToken) {
+        String email = jwtProvider.getUsername(refreshToken);
+
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(email, null, List.of());
+
+        String accessToken = jwtProvider.generateAccessToken(authenticationToken);
+
+        return new TokenDto(accessToken, refreshToken);
     }
 
     private void validatePassword(String rawPassword, String encodedPassword) {

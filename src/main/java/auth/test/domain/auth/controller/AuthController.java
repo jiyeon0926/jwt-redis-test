@@ -2,6 +2,8 @@ package auth.test.domain.auth.controller;
 
 import auth.test.domain.auth.dto.LoginReqDto;
 import auth.test.domain.auth.dto.LoginResDto;
+import auth.test.domain.auth.dto.RefreshReqDto;
+import auth.test.domain.auth.dto.TokenDto;
 import auth.test.domain.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,5 +25,12 @@ public class AuthController {
         LoginResDto login = authService.login(loginReqDto.getEmail(), loginReqDto.getPassword());
 
         return new ResponseEntity<>(login, HttpStatus.OK);
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<TokenDto> refresh(@RequestBody RefreshReqDto refreshReqDto) {
+        TokenDto refresh = authService.refresh(refreshReqDto.getRefreshToken());
+
+        return new ResponseEntity<>(refresh, HttpStatus.OK);
     }
 }
