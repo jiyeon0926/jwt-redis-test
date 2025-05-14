@@ -9,4 +9,5 @@ public class LoginResDto {
 
     private final String tokenAuthScheme;
     private final String accessToken;
+    private final String refreshToken;
 }

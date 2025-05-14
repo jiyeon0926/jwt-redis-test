@@ -36,6 +36,12 @@ public class JwtProvider {
 
     private final UserRepository userRepository;
 
+    public String generateRefreshToken(Authentication authentication) {
+        String username = authentication.getName();
+
+        return generateRefreshTokenBy(username);
+    }
+
     public String generateAccessToken(Authentication authentication) {
         String username = authentication.getName();
 
@@ -60,6 +66,24 @@ public class JwtProvider {
         }
 
         return false;
+    }
+
+    public boolean isAccessToken(String token) {
+        Claims claims = getClaims(token);
+
+        return claims.containsKey("role");
+    }
+
+    private String generateRefreshTokenBy(String email) {
+        Date currentDate = new Date();
+        Date expireDate = new Date(currentDate.getTime() + refreshExpiryMillis);
+
+        return Jwts.builder()
+                .subject(email)
+                .issuedAt(currentDate)
+                .expiration(expireDate)
+                .signWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)), Jwts.SIG.HS256)
+                .compact();
     }
 
     private String generateAccessTokenBy(String email) {
