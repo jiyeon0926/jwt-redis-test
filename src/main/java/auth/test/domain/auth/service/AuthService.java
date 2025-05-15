@@ -63,7 +63,11 @@ public class AuthService {
 
         String accessToken = jwtProvider.generateAccessToken(authenticationToken);
 
-        return new TokenDto(accessToken, refreshToken);
+        refreshTokenService.deleteRefreshToken(email);
+        String newRefreshToken = jwtProvider.generateRefreshToken(authenticationToken);
+        refreshTokenService.saveRefreshToken(newRefreshToken, email);
+
+        return new TokenDto(accessToken, newRefreshToken);
     }
 
     private void validatePassword(String rawPassword, String encodedPassword) {
