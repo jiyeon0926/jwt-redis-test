@@ -46,7 +46,7 @@ public class AuthService {
     }
 
     public TokenDto refresh(String refreshToken) {
-        tokenService.validRefreshToken(refreshToken);
+        tokenService.findByRefreshToken(refreshToken);
 
         String email = jwtProvider.getUsername(refreshToken);
 
