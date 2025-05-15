@@ -27,6 +27,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
+    private final TokenBlackListService tokenBlackListService;
 
     public LoginResDto login(String email, String password) {
         User user = userRepository.findByEmail(email)
@@ -43,6 +44,13 @@ public class AuthService {
         String refreshToken = jwtProvider.generateRefreshToken(authentication);
 
         return new LoginResDto(AuthenticationScheme.BEARER.getName(), accessToken, refreshToken);
+    }
+
+    public void logout(String accessToken) {
+        tokenBlackListService.saveAccessToken(accessToken);
+
+        String email = jwtProvider.getUsername(accessToken);
+        refreshTokenService.deleteRefreshToken(email);
     }
 
     public TokenDto refresh(String refreshToken) {

@@ -29,13 +29,13 @@ public class RefreshTokenService {
         refreshTokenRepository.save(refresh);
     }
 
-    public void deleteRefreshToken(String refreshToken) {
-        refreshTokenRepository.findByRefreshToken(refreshToken)
+    public void deleteRefreshToken(String email) {
+        refreshTokenRepository.findByAuthKey(email)
                 .ifPresent(token -> refreshTokenRepository.delete(token));
     }
 
     public void findByRefreshToken(String refreshToken) {
         refreshTokenRepository.findByRefreshToken(refreshToken)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "유효하지 않은 Refresh Token입니다."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "유효하지 않은 Refresh Token 입니다."));
     }
 }
