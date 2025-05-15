@@ -34,7 +34,7 @@ public class RefreshTokenService {
                 .ifPresent(token -> refreshTokenRepository.delete(token));
     }
 
-    public void validByRefreshToken(String refreshToken) {
+    public void validRefreshToken(String refreshToken) {
         refreshTokenRepository.findByRefreshToken(refreshToken)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "유효하지 않은 Refresh Token 입니다."));
     }
