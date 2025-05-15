@@ -31,6 +31,8 @@ dependencies {
 - 로그인
   - /auth/login
   - 이메일과 비밀번호를 통해 인증
+- 로그아웃
+  - /auth/logout
 - Access Token 재발급
   - /auth/refresh
   - Refresh Token을 요청 값으로 보내고, Access Token을 재발급 받음
