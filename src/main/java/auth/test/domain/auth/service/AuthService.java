@@ -26,7 +26,7 @@ public class AuthService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
-    private final TokenService tokenService;
+    private final RefreshTokenService refreshTokenService;
 
     public LoginResDto login(String email, String password) {
         User user = userRepository.findByEmail(email)
@@ -46,7 +46,7 @@ public class AuthService {
     }
 
     public TokenDto refresh(String refreshToken) {
-        tokenService.findByRefreshToken(refreshToken);
+        refreshTokenService.findByRefreshToken(refreshToken);
 
         String email = jwtProvider.getUsername(refreshToken);
 
