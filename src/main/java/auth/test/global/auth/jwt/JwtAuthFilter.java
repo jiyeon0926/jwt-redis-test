@@ -1,5 +1,6 @@
 package auth.test.global.auth.jwt;
 
+import auth.test.domain.auth.service.TokenBlackListService;
 import auth.test.global.auth.enums.AuthenticationScheme;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -24,6 +25,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtProvider jwtProvider;
     private final UserDetailsService userDetailsService;
+    private final TokenBlackListService tokenBlackListService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -37,7 +39,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String token = getTokenFromRequest(request);
 
         if (token != null) {
-            if (!jwtProvider.validToken(token) || !jwtProvider.validAccessToken(token)) {
+            if (!jwtProvider.validToken(token) || !jwtProvider.validAccessToken(token) || tokenBlackListService.validBlackList(token)) {
                 return;
             }
 

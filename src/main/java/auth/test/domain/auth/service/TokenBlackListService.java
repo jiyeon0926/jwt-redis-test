@@ -31,4 +31,8 @@ public class TokenBlackListService {
             tokenBlackListRepository.save(blackList);
         }
     }
+
+    public boolean validBlackList(String accessToken) {
+        return tokenBlackListRepository.findByAccessToken(accessToken).isPresent();
+    }
 }
