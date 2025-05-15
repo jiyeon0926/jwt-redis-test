@@ -73,7 +73,7 @@ public class JwtProvider {
         return false;
     }
 
-    public boolean isAccessToken(String token) {
+    public boolean validAccessToken(String token) {
         Claims claims = getClaims(token);
 
         return claims.containsKey("role");
