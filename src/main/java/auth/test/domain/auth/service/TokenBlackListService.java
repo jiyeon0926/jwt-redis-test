@@ -2,24 +2,18 @@ package auth.test.domain.auth.service;
 
 import auth.test.domain.auth.entity.TokenBlackList;
 import auth.test.domain.auth.repository.TokenBlackListRepository;
-import lombok.Getter;
+import auth.test.global.auth.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
 public class TokenBlackListService {
 
-    @Getter
-    @Value("${jwt.expiry-millis}")
-    private long expiryMillis;
-
     private final TokenBlackListRepository tokenBlackListRepository;
+    private final JwtProvider jwtProvider;
 
     public void saveAccessToken(String accessToken) {
         boolean present = tokenBlackListRepository.findByAccessToken(accessToken).isPresent();
@@ -28,8 +22,9 @@ public class TokenBlackListService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "이미 등록된 Access Token 입니다.");
         }
 
-        long now = new Date().getTime();
-        long remainExpiry = now - expiryMillis;
+        long now = System.currentTimeMillis();
+        long expiryMillis = jwtProvider.getExpirationDateFromToken(accessToken).getTime();
+        long remainExpiry = expiryMillis - now;
 
         TokenBlackList blackList = TokenBlackList.builder()
                 .accessToken(accessToken)

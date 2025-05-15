@@ -79,6 +79,10 @@ public class JwtProvider {
         return claims.containsKey("role");
     }
 
+    public Date getExpirationDateFromToken(String token) {
+        return resolveClaims(token, Claims::getExpiration);
+    }
+
     private String generateRefreshTokenBy(String email) {
         Date currentDate = new Date();
         Date expireDate = new Date(currentDate.getTime() + refreshExpiryMillis);
@@ -123,10 +127,6 @@ public class JwtProvider {
         final Date expiration = getExpirationDateFromToken(token);
 
         return expiration.before(new Date());
-    }
-
-    private Date getExpirationDateFromToken(String token) {
-        return resolveClaims(token, Claims::getExpiration);
     }
 
     private <T> T resolveClaims(String token, Function<Claims, T> claimsResolver) {
