@@ -25,14 +25,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResDto> login(@RequestBody LoginReqDto loginReqDto,
-                                             HttpServletRequest request) {
-        String accessToken = getAccessToken(request);
-
-        if (accessToken != null) {
-            authService.logout(accessToken);
-        }
-
+    public ResponseEntity<LoginResDto> login(@RequestBody LoginReqDto loginReqDto) {
         LoginResDto login = authService.login(loginReqDto.getEmail(), loginReqDto.getPassword());
 
         return new ResponseEntity<>(login, HttpStatus.OK);
