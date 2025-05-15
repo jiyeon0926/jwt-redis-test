@@ -79,8 +79,16 @@ public class JwtProvider {
         return claims.containsKey("role");
     }
 
-    public Date getExpirationDateFromToken(String token) {
-        return resolveClaims(token, Claims::getExpiration);
+    public Claims getClaims(String token) {
+        if (!StringUtils.hasText(token)) {
+            throw new MalformedJwtException("토큰이 비어 있습니다.");
+        }
+
+        return Jwts.parser()
+                .verifyWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)))
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     private String generateRefreshTokenBy(String email) {
@@ -96,7 +104,7 @@ public class JwtProvider {
     }
 
     private String generateAccessTokenBy(String email) {
-       userRepository.findByEmail(email)
+        userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."));
 
         Date currentDate = new Date();
@@ -111,22 +119,14 @@ public class JwtProvider {
                 .compact();
     }
 
-    private Claims getClaims(String token) {
-        if (!StringUtils.hasText(token)) {
-            throw new MalformedJwtException("토큰이 비어 있습니다.");
-        }
-
-        return Jwts.parser()
-                .verifyWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)))
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
-    }
-
     private boolean tokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
 
         return expiration.before(new Date());
+    }
+
+    private Date getExpirationDateFromToken(String token) {
+        return resolveClaims(token, Claims::getExpiration);
     }
 
     private <T> T resolveClaims(String token, Function<Claims, T> claimsResolver) {

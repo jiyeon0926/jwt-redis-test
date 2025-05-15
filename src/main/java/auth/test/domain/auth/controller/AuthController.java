@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,10 +60,8 @@ public class AuthController {
         String bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
         String headerPrefix = AuthenticationScheme.generateType(AuthenticationScheme.BEARER);
 
-        if (bearerToken != null && bearerToken.startsWith(headerPrefix)) {
-            bearerToken.substring(headerPrefix.length());
-        }
-
-        return null;
+        return StringUtils.hasText(bearerToken) && bearerToken.startsWith(headerPrefix)
+                ? bearerToken.substring(headerPrefix.length())
+                : null;
     }
 }
