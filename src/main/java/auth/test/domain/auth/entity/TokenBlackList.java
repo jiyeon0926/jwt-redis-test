@@ -19,12 +19,15 @@ public class TokenBlackList {
     @Indexed
     private String accessToken;
 
+    private String authKey;
+
     @TimeToLive(unit = TimeUnit.MILLISECONDS)
     private Long ttl;
 
     @Builder
-    public TokenBlackList(String accessToken, Long ttl) {
+    public TokenBlackList(String accessToken, String authKey, Long ttl) {
         this.accessToken = accessToken;
+        this.authKey = authKey;
         this.ttl = ttl;
     }
 }

@@ -16,7 +16,7 @@ public class TokenBlackListService {
     private final TokenBlackListRepository tokenBlackListRepository;
     private final JwtProvider jwtProvider;
 
-    public void saveAccessToken(String accessToken) {
+    public void saveAccessToken(String accessToken, String email) {
         long now = new Date().getTime();
         Claims claims = jwtProvider.getClaims(accessToken);
         Date expiration = claims.getExpiration();
@@ -25,6 +25,7 @@ public class TokenBlackListService {
         if (remainExpiration > 0) {
             TokenBlackList blackList = TokenBlackList.builder()
                     .accessToken(accessToken)
+                    .authKey(email)
                     .ttl(remainExpiration)
                     .build();
 
