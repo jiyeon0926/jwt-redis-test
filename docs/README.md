@@ -38,3 +38,7 @@ dependencies {
 - Access Token 재발급
   - /auth/refresh
   - Refresh Token을 요청 값으로 보내고, Access Token을 재발급 받음
+ 
+  ## 보완
+  테스트를 기반으로 보완된 Repository
+  - https://github.com/jiyeon0926/rht-auth-redis
