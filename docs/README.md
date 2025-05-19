@@ -1,4 +1,6 @@
 # Redis를 사용해 JWT 관리하기
+- CrudRepository를 상속받아 구현
+- Redis Template 사용 안 함
 
 ## 기술 스택
 - Java 21
@@ -40,5 +42,4 @@ dependencies {
   - Refresh Token을 요청 값으로 보내고, Access Token을 재발급 받음
  
   ## 보완
-  테스트를 기반으로 보완된 Repository
   - https://github.com/jiyeon0926/rht-auth-redis
