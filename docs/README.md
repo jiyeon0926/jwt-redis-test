@@ -41,5 +41,13 @@ dependencies {
   - /auth/refresh
   - Refresh Token을 요청 값으로 보내고, Access Token을 재발급 받음
  
-  ## 보완
-  - https://github.com/jiyeon0926/rht-auth-redis-crud
+## 보완
+- https://github.com/jiyeon0926/rht-auth-redis-crud (V1)
+
+## Redis 명령어
+```
+FLUSHDB
+```
+```
+KEYS *
+```
